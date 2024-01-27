@@ -29,7 +29,6 @@ function preload() {
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	print(numSounds)
 	
 	for (let i = 0; i < numSounds; i++) { triggerAlpha[i] = 5 }
 	for (let i = 0; i < numSounds; i++) { soundEntered[i] = false }
@@ -62,7 +61,7 @@ function draw() {
 		circle(triggerX[i], triggerY[i], triggerSize*2)
 	}
 	fill(255)
-	text("1", 20, 20)
+	text("2", 20, 20)
 }
 
 function playSounds() {
