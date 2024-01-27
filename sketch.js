@@ -61,18 +61,20 @@ function draw() {
 		fill(225, 225, 225, triggerAlpha[i])
 		circle(triggerX[i], triggerY[i], triggerSize*2)
 	}
+	fill(255)
+	text("1", 20, 20)
 }
 
 function playSounds() {
 	for (let i = 0; i < numSounds; i++) {
 		if (dist(mouseX, mouseY, triggerX[i], triggerY[i]) < triggerSize) {
 			if (soundEntered[i] == false) {
+				triggerAlpha[i] = 50
 				anim[i].setSpeed(1)
 				anim[i].goToAndStop(0)
 				anim[i].play()
 				soundFiles[i].playMode('restart')
 				soundFiles[i].play()
-				triggerAlpha[i] = 50
 			}
 			soundEntered[i] = true
 		} else {
