@@ -96,3 +96,8 @@ function mousePressed() {
 	}
 	userStartAudio()
 }
+
+function touchMoved() {
+	return
+}
+
