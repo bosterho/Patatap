@@ -6,7 +6,7 @@ let soundFiles = []
 let soundEntered = []
 let triggerX = []
 let triggerY = []
-let triggerSize = 100
+let triggerSize
 let triggerAlpha = []
 
 
@@ -33,6 +33,7 @@ function setup() {
 	
 	for (let i = 0; i < numSounds; i++) { triggerAlpha[i] = 5 }
 	for (let i = 0; i < numSounds; i++) { soundEntered[i] = false }
+	triggerSize = windowWidth / 8
 
 	for (let i = 0; i < numSounds; i++) {
 		lottie = createDiv();
@@ -65,10 +66,10 @@ function draw() {
 function playSounds() {
 	for (let i = 0; i < numSounds; i++) {
 		if (dist(mouseX, mouseY, triggerX[i], triggerY[i]) < triggerSize) {
-			anim[i].setSpeed(1)
-			anim[i].goToAndStop(0)
-			anim[i].play()
 			if (soundEntered[i] == false) {
+				anim[i].setSpeed(1)
+				anim[i].goToAndStop(0)
+				anim[i].play()
 				soundFiles[i].playMode('restart')
 				soundFiles[i].play()
 				triggerAlpha[i] = 50
@@ -80,17 +81,17 @@ function playSounds() {
 	}
 }
 
-function mouseDragged() {
+function touchMoved() {
 	playSounds()
 }
 
-function mouseReleased() {
+function touchEnded() {
 	for (let i = 0; i < numSounds; i++) {
 		soundEntered[i] = false
 	}
 }
 
-function mousePressed() {
+function touchStarted() {
 	if (getAudioContext().state == 'running') {
 		playSounds()
 	}
@@ -98,6 +99,7 @@ function mousePressed() {
 }
 
 function touchMoved() {
+	playSounds()
 	return false
 }
 
