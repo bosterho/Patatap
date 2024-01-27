@@ -98,6 +98,6 @@ function mousePressed() {
 }
 
 function touchMoved() {
-	return
+	return false
 }
 
