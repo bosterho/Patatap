@@ -36,6 +36,7 @@ function preload() {
 }
 
 function setup() {
+	pixelDensity(1) 
 	createCanvas(windowWidth, windowHeight)
 
 	for (let i = 0; i < numTriggers; i++) {
@@ -169,3 +170,5 @@ function windowResized() {
 	resizeCanvas(windowWidth, windowHeight);
 	update_animation_sizes()
 }
+
+
