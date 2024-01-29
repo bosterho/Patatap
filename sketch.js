@@ -1,5 +1,6 @@
 let numTriggers = 0
-let lottie
+let animContainer
+let lottie = []
 let animData = []
 let anim = []
 let soundFiles = []
@@ -16,6 +17,7 @@ let prev_touches
 let log = ""
 
 function add_trigger(name, x, y) {
+	lottie.push(createDiv())
 	soundFiles.push(loadSound("assets/" + name + ".mp3"))
 	animData.push(loadJSON("assets/" + name + ".json"))
 	triggerX.push(x)
@@ -27,8 +29,10 @@ function preload() {
 	soundFormats("mp3")
 
 	add_trigger("strum", 25, 25)
+	add_trigger("wipe 2", 75, 75)
 	add_trigger("wipe", 75, 25)
 	add_trigger("piano harmonic", 50, 50)
+	add_trigger("strange hit", 25, 75)
 }
 
 function setup() {
@@ -41,20 +45,21 @@ function setup() {
 		triggerEntered[i] = []
 	}
 
+	animContainer = createDiv();
+
 	for (let i = 0; i < numTriggers; i++) {
-		lottie = createDiv()
 		let params = {
-			container: lottie.elt,
+			container: lottie[i].elt,
 			loop: false,
 			autoplay: false,
 			animationData: animData[i],
 			renderer: "svg",
 		}
 		anim[i] = bodymovin.loadAnimation(params)
-
+		
 		update_animation_sizes()
-
-		anim[i].goToAndStop(1000) // to end
+		
+		anim[i].goToAndStop(2000) // to end
 	}
 }
 
@@ -81,7 +86,7 @@ function touchStarted() {
 					triggerY_px[i]
 				) < triggerSize
 			) {
-				triggerSound(i)
+				playTrigger(i)
 				triggerEntered[i][touches.length - 1] = true
 			}
 		}
@@ -93,7 +98,7 @@ function mousePressed() {
 	if (getAudioContext().state == "running") {
 		for (let i = 0; i < numTriggers; i++) {
 			if (dist(mouseX, mouseY, triggerX_px[i], triggerY_px[i]) < triggerSize) {
-				triggerSound(i)
+				playTrigger(i)
 				triggerEntered[i][0] = true
 			}
 		}
@@ -108,7 +113,7 @@ function touchMoved() {
 				dist(touches[t].x, touches[t].y, triggerX_px[i], triggerY_px[i]) < triggerSize
 			) {
 				if (!triggerEntered[i][t]) {
-					triggerSound(i)
+					playTrigger(i)
 				}
 				triggerEntered[i][t] = true
 			} else {
@@ -123,7 +128,7 @@ function mouseDragged(event) {
 	for (let i = 0; i < numTriggers; i++) {
 		if (dist(mouseX, mouseY, triggerX_px[i], triggerY_px[i]) < triggerSize) {
 			if (!triggerEntered[i][0]) {
-				triggerSound(i)
+				playTrigger(i)
 			}
 			triggerEntered[i][0] = true
 		} else {
@@ -135,22 +140,22 @@ function mouseDragged(event) {
 function keyPressed() {
 	// a
 	if (keyCode == 65) {
-		triggerSound(0)
+		playTrigger(0)
 	}
 
 	// s
 	if (keyCode == 83) {
-		triggerSound(1)
+		playTrigger(1)
 	}
 
 	// d
 	if (keyCode == 68) {
-		triggerSound(2)
+		playTrigger(2)
 	}
 
 	// f
 	if (keyCode == 70) {
-		triggerSound(3)
+		playTrigger(3)
 	}
 }
 
