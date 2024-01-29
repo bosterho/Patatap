@@ -121,6 +121,8 @@ function touchMoved() {
 			}
 		}
 	}
+	userStartAudio()
+
 	return false
 }
 
@@ -135,6 +137,7 @@ function mouseDragged(event) {
 			triggerEntered[i][0] = false
 		}
 	}
+	userStartAudio()
 }
 
 function keyPressed() {
@@ -157,6 +160,9 @@ function keyPressed() {
 	if (keyCode == 70) {
 		playTrigger(3)
 	}
+
+	userStartAudio()
+
 }
 
 function windowResized() {
