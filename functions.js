@@ -1,5 +1,5 @@
 function playTrigger(i) {
-    animContainer.elt.appendChild(lottie[i].elt);
+    // animContainer.elt.appendChild(lottie[i].elt);
     triggerAlpha[i] = 50;
     anim[i].setSpeed(1);
     anim[i].goToAndStop(0);
