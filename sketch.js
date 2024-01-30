@@ -13,31 +13,36 @@ let triggerSize
 let triggerAlpha = []
 let counter = 0
 let prev_touches
+let cellSize = 25
 
 let log = ""
 
 function add_trigger(name, x, y) {
 	lottie.push(createDiv())
 	soundFiles.push(loadSound("assets/" + name + ".mp3"))
-	animData.push(loadJSON("assets/" + name + ".json"))
-	triggerX.push(x)
-	triggerY.push(y)
+	animData.push(loadJSON("assets/" + name + ".lottie.json"))
+	triggerX.push(x * cellSize)
+	triggerY.push(y * cellSize)
 	numTriggers++
 }
 
 function preload() {
 	soundFormats("mp3")
 
-	add_trigger("strum", 25, 25)
-	add_trigger("wipe 2", 75, 75)
-	add_trigger("wipe", 75, 25)
-	add_trigger("piano harmonic", 50, 50)
-	add_trigger("strange hit", 25, 75)
+	add_trigger("strum",         1, 1)
+	add_trigger("wipe 2",        2, 1)
+	add_trigger("wipe",          3, 1)
+	add_trigger("piano harmonic",1, 2)
+	add_trigger("strange hit",   2, 2)
+	add_trigger("windup",        3, 2)
+	add_trigger("pop",           1, 3)
+	add_trigger("grid",          2, 3)
+	add_trigger("grid 2",        3, 3)
 }
 
 function setup() {
 	pixelDensity(1) 
-	createCanvas(windowWidth, windowHeight)
+	createCanvas(1080/2, 1920/2)
 
 	for (let i = 0; i < numTriggers; i++) {
 		triggerAlpha[i] = 5
@@ -58,17 +63,17 @@ function setup() {
 		}
 		anim[i] = bodymovin.loadAnimation(params)
 		
-		update_animation_sizes()
 		
 		anim[i].goToAndStop(2000) // to end
 	}
+	update_animation_sizes()
 }
 
 function draw() {
 	background(40)
 	noStroke()
 	for (let i = 0; i < numTriggers; i++) {
-		if (triggerAlpha[i] > 5) triggerAlpha[i] -= 3
+		if (triggerAlpha[i] > 2) triggerAlpha[i] -= 3
 		fill(225, 225, 225, triggerAlpha[i])
 		circle(triggerX_px[i], triggerY_px[i], triggerSize * 2)
 	}
@@ -166,9 +171,9 @@ function keyPressed() {
 
 }
 
-function windowResized() {
-	resizeCanvas(windowWidth, windowHeight);
-	update_animation_sizes()
-}
+// function windowResized() {
+// 	resizeCanvas(windowWidth, windowHeight);
+// 	update_animation_sizes()
+// }
 
 
